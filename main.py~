@@ -46,7 +46,7 @@ def get_feed(code):
         photos = []
         for media in recent_media:
             #print vars(media.user)
-            photos.append('{ "feed_url": "' + media.images['standard_resolution'].url + '", "username": "' + media.user.username + '", "profile_img_url": "' + media.user.profile_picture + '" }')
+            photos.append('{ "feed_url": "' + media.images['standard_resolution'].url + '", "username": "' + media.user.username + '", "profile_img_url": "' + media.user['profile_picture'] + '" }')
         return  '['+','.join(photos)+']', next
     except Exception, e:
         print e
