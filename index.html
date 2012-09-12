@@ -14,16 +14,21 @@
 		<script type='text/javascript'>
 	        var next = "{{!next}}";
 		    var feed = {{!feed}};
-		    var remainingToFetch = 3;
+		    var remainingToFetch = 19;
+		    var fetchingNextBatch = false;
 		    
 		    $(document).ready(function(){			    
+                appendImages(feed);
+			});
+			
+			function appendImages(feed){
+			    console.log(feed);   
 			    for(f in feed){			        
 			        var fImg = $("<img>").attr("src", feed[f].feed_url);
 			        
 			        if(f == 0){
 			            $(fImg).load(function(){
 			                setInterval(cycleImg, 3000);
-			                console.log(this);
 			                $(this).parent().fadeIn("slow");
 			            });
 			        }
@@ -41,16 +46,41 @@
 			                                .append($("<label>")
 			                                .html(feed[f].username))));   
 			    }
-			});
-			
-			function getNextBatch(){
-			}
+			}			
 			
 			function cycleImg(){
                 var current = $(".feedImg").filter(":visible");
                 $(current).fadeOut("slow");
-                $(current).next().fadeIn("slow")           
+                $(current).next().fadeIn("slow");  
+                if($(current).nextUntil().length <= remainingToFetch && !fetchingNextBatch){
+                    getNextBatch();
+                }
 			}
+			
+			function getNextBatch(){
+			    fetchingNextBatch = true;
+                $.ajax({
+                  type: "POST",
+                  url: "/get_feed",
+                  data: { code: getQueryVariable("code"), "next": next }
+                }).done(function( data ) {
+                    appendImages(data);
+                    fetchingNextBatch = false;
+                });
+			}
+			
+			//Taken from http://stackoverflow.com/questions/2090551/parse-query-string-in-javascript
+            function getQueryVariable(v) {
+                var query = window.location.search.substring(1);
+                var vars = query.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    if (decodeURIComponent(pair[0]) == v) {
+                        return decodeURIComponent(pair[1]);
+                    }
+                }
+            }
+
 		</script>
 	</body>
 </html>

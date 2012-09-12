@@ -43,6 +43,10 @@ def bind_method(**config):
         response_type = config.get("response_type", "list")
         include_secret = config.get("include_secret", False)
         objectify_response = config.get("objectify_response", True)
+        
+        if 'max_id' in config:
+            max_id = config.get('max_id', '')
+            print max_id
 
         def __init__(self, api, *args, **kwargs):
             self.api = api
