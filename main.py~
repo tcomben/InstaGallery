@@ -5,8 +5,8 @@ from instagram import client, subscriptions
 bottle.debug(True)
 
 CONFIG = {
-    'client_id': '95535305e7a64fd8a928c467db8b326c',
-    'client_secret': '97f4fe353fa7467e8937b5895fdd85a9',
+    'client_id': '',
+    'client_secret': '',
     'redirect_uri': 'http://localhost:8515/oauth_callback'
 }
 
@@ -53,7 +53,7 @@ def get_feed(code = ''):
         if not max_id:
             recent_media, next = api.user_media_feed()
         else:
-            recent_media, next = api.user_media_feed_next(max_id)
+            recent_media, next = api.user_media_feed_next(max_id = max_id)
         photos = []
         for media in recent_media:
             photos.append('{ "feed_url": "' + media.images['standard_resolution'].url + '", "username": "' + media.user.username + '", "profile_img_url": "' + media.user.profile_picture + '" }')

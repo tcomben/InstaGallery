@@ -85,13 +85,6 @@ class InstagramAPI(oauth2.OAuth2API):
                 root_class=Media,
                 paginates=True)
                 
-    user_media_feed_next = bind_method(
-                path="/users/self/feed",
-                accepts_parameters=MEDIA_ACCEPT_PARAMETERS,
-                root_class=Media,
-                paginates=True,
-                max_id = max_id)
-
     user_liked_media = bind_method(
                 path="/users/self/media/liked",
                 accepts_parameters=MEDIA_ACCEPT_PARAMETERS,

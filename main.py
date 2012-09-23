@@ -5,8 +5,8 @@ from instagram import client, subscriptions
 bottle.debug(True)
 
 CONFIG = {
-    'client_id': '95535305e7a64fd8a928c467db8b326c',
-    'client_secret': '97f4fe353fa7467e8937b5895fdd85a9',
+    'client_id': '<CLIENTID>',
+    'client_secret': '<SECRET>',
     'redirect_uri': 'http://localhost:8515/oauth_callback'
 }
 
